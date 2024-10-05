@@ -1,0 +1,251 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
+
+
+
+int main();
+
+typedef struct {
+    char nom[50];
+    char prenom[50];
+    char tel[15]; 
+    int age;
+    char statut[10];
+    int reference;
+    char date[12]; 
+} Reservation;
+
+
+Reservation R[100]; 
+int total_reservations = 0;
+
+void ajouterReservation(){
+    int n,x;
+     printf("Combien de réservations de rendez-vous dentaires vous voulez : ");
+                scanf("%d", &n);
+                for (int i = 0; i < n; i++) { 
+
+                    printf("\nEntrez les informations suivantes :\n");
+                    printf("Nom: ");
+                    scanf("%s",R[i].nom);
+                    printf("Prénom: ");
+                    scanf("%s", R[i].prenom);
+                    printf("Téléphone: ");
+                    scanf("%s", R[i].tel);  
+                    printf("Âge: ");
+                    scanf("%d", &R[i].age); 
+                    
+                    printf("\nChoisissez le statut (1-4):\n");
+                    printf("1 --> Valide\n");
+                    printf("2 --> Reporte\n");
+                    printf("3 --> Annule\n");
+                    printf("4 --> Traite\n");
+                    scanf("%d", &x); 
+                    
+                    switch (x) {
+                        case 1:
+                            strcpy(R[i].statut, "Valide");
+                            break;
+                        case 2:
+                            strcpy(R[i].statut, "Reporte");
+                            break;
+                        case 3:
+                            strcpy(R[i].statut, "Annule");
+                            break;
+                        case 4:
+                            strcpy(R[i].statut, "Traite");
+                            break;
+                        default:
+                            printf("Please choose a number between 1 and 4.\n");
+                    }
+
+                   
+                    R[i].reference = i + 1;
+                    strcpy(R[i].date, "12-10-2024");
+                    total_reservations++;
+                }
+              main();
+}
+
+
+void modifierReservation(){
+    int ref,i, choice,  x;
+     printf("what exactly you want: \n");
+      printf("1: modify: \n");
+       printf("2: delete: \n");
+        scanf("%d", &choice);
+
+               if(choice == 1)
+               {
+                   printf("%d", total_reservations);
+                   printf("give me the reference \n");
+                   scanf("%d", &ref);
+                    for (int i = 0; i < total_reservations; i++) {
+                        if (R[i].reference == ref) {
+                            printf("\nEntrez les informations suivantes :\n");
+                            printf("Nom: ");
+                            scanf("%s",R[i].nom);
+                            printf("Prénom: ");
+                            scanf("%s", R[i].prenom);
+                            printf("Téléphone: ");
+                            scanf("%s", R[i].tel);  
+                            printf("Âge: ");
+                            scanf("%d", &R[i].age); 
+                            
+                            printf("\nChoisissez le statut (1-4):\n");
+                            printf("1 --> Valide\n");
+                            printf("2 --> Reporte\n");
+                            printf("3 --> Annule\n");
+                            printf("4 --> Traite\n");
+                            
+                            scanf("%d", &x); 
+                        
+                            switch (x) {
+                                case 1:
+                                    strcpy(R[i].statut, "Valide");
+                                    break;
+                                case 2:
+                                    strcpy(R[i].statut, "Reporte");
+                                    break;
+                                case 3:
+                                    strcpy(R[i].statut, "Annule");
+                                    break;
+                                case 4:
+                                    strcpy(R[i].statut, "Traite");
+                                    break;
+                                default:
+                                    printf("Please choose a number between 1 and 4.\n");
+                            }
+                       
+                            
+                            strcpy(R[i].date, "12-10-2024");
+                            
+                            break;
+                        }
+                       
+                }
+           }
+           else if(choice == 2)
+           {
+               printf("Entrez la référence de la réservation à supprimer : ");
+                scanf("%d", &ref);
+
+                for (i = 0; i < total_reservations; i++) {
+                    if (R[i].reference == ref) {
+                        for (int j = i; j < total_reservations - 1; j++) {
+                            R[j] = R[j + 1];
+                        }
+                        total_reservations--;
+                        printf("Réservation supprimée avec succès!\n");
+                        break;
+                    }
+                }
+                
+           }
+                
+                
+                
+                
+             main();
+}
+void afficherDetails() {
+  
+    for (int i = 0; i < total_reservations; i++) {
+            printf("********** :\n");
+            printf("Détails de la réservation :\n");
+            printf("Nom : %s\n", R[i].nom);
+            printf("Prénom : %s\n", R[i].prenom);
+            printf("Téléphone : %s\n", R[i].tel);
+            printf("Âge : %d\n", R[i].age);
+            printf("Statut : %s\n", R[i].statut);
+            printf("Référence : %d\n", R[i].reference);
+            printf("Date de réservation : %s\n", R[i].date);
+           
+        }
+    
+    printf("Réservation non trouvée.\n");
+    main();
+}
+
+
+
+void rechercherReservation() {
+    char nom[50];
+    printf("Entrez le nom à rechercher : ");
+    scanf("%s", nom);
+
+    for (int i = 0; i < total_reservations; i++) {
+        if (strcmp(R[i].nom, nom) == 0) {
+            printf("Réservation trouvée : %s %s (Réf: %d) age is %d \n", R[i].nom, R[i].prenom, R[i].reference, R[i].age);
+            return;
+        }
+    }
+    printf("Aucune réservation trouvée avec ce nom.\n");
+}
+
+
+int main() {
+   
+   
+    int choix, i, n, x, ref; 
+
+    do {
+        printf("\n°°°°°°°°°°°°°°°°°°°°°°°°°°°°");
+        printf("\nL'application permet de gérer les réservations de rendez-vous dentaires,");
+        printf("\n~~~~~");
+        printf("\nPlease choose a number between 1 to 6");
+        printf("\nPour Ajouter une réservation --> 1");
+        printf("\nPour Modifier ou supprimer une réservation --> 2");
+        printf("\nPour Afficher les détails d'une réservation --> 3");
+        printf("\nPour Tri des réservations --> 4");
+        printf("\nPour Recherche des réservations --> 5");
+        printf("\nPour Statistiques --> 6");
+        printf("\nSortie --> 7");
+        printf("\nEnter number choice: ");
+        scanf("%d", &choix);
+
+        switch (choix) {
+            case 1:{
+                     ajouterReservation();
+                }
+            case 2:{
+                    modifierReservation();
+                }
+               
+            case 3:{
+                    afficherDetails();
+                 } 
+            
+            case 4:{
+                   printf("\n\nNot yet );\n \n");
+                break;
+              }
+             
+
+            case 5:{
+                    rechercherReservation();
+                      break;
+               }
+                
+            case 6:{
+                  printf("\n\nNot yet );\n \n");
+                   break; 
+              }
+              
+
+            default:
+                if (choix != 7)
+                    printf("Veuillez choisir un numéro entre 1 et 7.\n");
+                    break;
+        }
+       
+    
+
+
+    } while (choix != 7);
+
+    printf("Sortie du programme.\n");
+    return 0;
+}
